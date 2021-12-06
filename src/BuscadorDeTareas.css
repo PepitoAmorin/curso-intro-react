@@ -1,0 +1,20 @@
+.buscador-tareas {
+  width: 50%; 
+  min-width: 330px; 
+  height: 30px; 
+  margin: 0 auto; 
+  padding: 5px 0 5px 25px;  
+  background-color: #ffffff75; 
+  color: #fff; 
+  font-size: 20px; 
+  border: none; 
+}
+
+.buscador-tareas:focus {
+  outline: none;
+} 
+
+.buscador-tareas::placeholder {
+  color: #fff; 
+  font-weight: 100;
+}
