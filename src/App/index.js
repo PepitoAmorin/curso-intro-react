@@ -1,37 +1,20 @@
 import React from 'react'
 import './App.css'; 
-import { BotonCrearTarea } from "./BotonCrearTarea"; 
-import { BuscadorDeTareas } from "./BuscadorDeTareas";
-import { ContadorDeTareas } from "./ContadorDeTareas"; 
-import { ListaDeTareas } from "./ListaDeTareas"; 
-import { Tarea } from "./Tarea"; 
-
-const tareasPorDefecto = [
-  {
-    id: 1, 
-    texto: 'ejemplo tarea número uno', 
-    hecha: false
-  }, 
-  {
-    id: 2, 
-    texto: 'segunda tarea (2)', 
-    hecha: true
-  }, 
-  {
-    id: 3, 
-    texto: 'otra tarea, esta es la tercera', 
-    hecha: true
-  }, 
-  {
-    id: 4, 
-    texto: 'una tarea más, la cuarta (4)', 
-    hecha: true
-  },
-]; 
+import { UI } from "./UI"; 
 
 function App(props) { 
+  // localStorage 
+  const tareasEnLS = localStorage.getItem('TareasV1'); 
+  let tareasDeLSParseadas; 
+  if (!tareasEnLS) { 
+    localStorage.setItem('TareasV1', '[]'); 
+    tareasDeLSParseadas = []; 
+  } else {
+    tareasDeLSParseadas = JSON.parse(tareasEnLS);
+  }
+
   // llamamos al estado de la lista de tareas
-  const [tareas, setTareas] = React.useState(tareasPorDefecto);
+  const [tareas, setTareas] = React.useState(tareasDeLSParseadas);
   // llamamos al estado de la búsqueda
   const [busqueda, setBusqueda] = React.useState('');
   // tareas totales y completadas 
@@ -51,6 +34,14 @@ function App(props) {
     busquedaDeTareas = tareas; 
   } 
 
+  // función para guardar tareas 
+  const guardarTareas = (lista) => {
+    const listaEnString = JSON.stringify(lista); 
+    localStorage.setItem('TareasV1', listaEnString); 
+    // tenemos que actualizar el estado de los componentes en la aplicación también 
+    setTareas(lista); 
+  }
+
   // función para marcar la tarea como hecha
   const completarTarea = id => {
     const indiceTarea = tareas.findIndex(tarea => tarea.id === id); 
@@ -58,45 +49,32 @@ function App(props) {
     // primero la hacemos
     const nuevasTareas = [...tareas] 
     // después cambiamos el .hecha de la tarea completada
-    if (nuevasTareas[indiceTarea].hecha === false) {
+    if (!nuevasTareas[indiceTarea].hecha) {
       nuevasTareas[indiceTarea].hecha = true; 
     } else {
       nuevasTareas[indiceTarea].hecha = false;
     }
-    // después mandamos cambiar el estado al Componente
-    setTareas(nuevasTareas); 
+    // después mandamos cambiar el estado al localStorage (persistencia)
+    guardarTareas(nuevasTareas); 
   };  
 
   const borrarTarea = id => {
     const indiceTarea = tareas.findIndex(tarea => tarea.id === id); 
     const nuevasTareas = [...tareas]; 
     nuevasTareas.splice(indiceTarea, 1); 
-    setTareas(nuevasTareas);
+    guardarTareas(nuevasTareas);
   }; 
 
   return (
-    <>
-      <ContadorDeTareas 
-        totalDeTareas={totalDeTareas} 
-        tareasCompletadas={tareasCompletadas}
-      />
-      <BuscadorDeTareas 
-        busqueda={busqueda}
-        setBusqueda={setBusqueda}
-      />
-      <ListaDeTareas>
-        {busquedaDeTareas.map(tarea => (
-        <Tarea 
-          key={tarea.id} 
-          id={tarea.id} 
-          text={tarea.texto} 
-          hecha={tarea.hecha} 
-          completar={() => completarTarea(tarea.id)} 
-          borrar={() => borrarTarea(tarea.id)}
-          />))}
-      </ListaDeTareas>
-      <BotonCrearTarea />
-    </>
+    <UI 
+    totalDeTareas={totalDeTareas} 
+    tareasCompletadas={tareasCompletadas} 
+    busqueda={busqueda}
+    setBusqueda={setBusqueda} 
+    busquedaDeTareas={busquedaDeTareas}
+    completarTarea={completarTarea} 
+    borrarTarea={borrarTarea}
+    />
   );
 }
 

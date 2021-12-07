@@ -3,7 +3,9 @@ import './ContadorDeTareas.css'
 
 function ContadorDeTareas({ totalDeTareas, tareasCompletadas}) { 
   const textoContador = function(totalDeTareas, tareasCompletadas) {
-    if (totalDeTareas > tareasCompletadas) {
+    if (totalDeTareas === 0) {
+      return `Todavía no tenés tareas. Agregá una!`
+    } else if (totalDeTareas > tareasCompletadas) {
       return `Has completado ${tareasCompletadas} de ${totalDeTareas} tareas!`
     } else {
       return `Has completado TODAS las tareas!`
