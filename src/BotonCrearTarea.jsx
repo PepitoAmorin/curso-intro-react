@@ -1,12 +1,18 @@
 import React from 'react'; 
 import './BotonCrearTarea.css'; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; 
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faPlus } from '@fortawesome/free-solid-svg-icons' 
 
-function BotonCrearTarea() {
+function BotonCrearTarea(props) { 
+
+  const crearTarea = () => alert(`Crear tarea (modal)`)
+
   return (
-      <button className="crear-tarea"> 
-        <span class="tooltip">Tooltip text</span>
+      <button 
+        className="crear-tarea" 
+        onClick={crearTarea}
+      > 
+        <span className="tooltip">Agregate una tarea amigue ;)</span>
         <FontAwesomeIcon className="icono" icon={faPlus} />
       </button>
   )

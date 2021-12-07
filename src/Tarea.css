@@ -7,9 +7,21 @@
   align-items: center;
 } 
 
-.tarea span, .tarea p { 
+span, .tarea p { 
   margin: 5px; 
   color: #fff;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 20px;
+} 
+
+.tarea p.texto--hecho {
+  text-decoration:line-through; 
+}
+
+.tarea span.tick--hecho {
+  color: rgb(25, 209, 19);
+} 
+
+.tarea span.basura:hover {
+  color: rgb(209, 19, 19);
 } 

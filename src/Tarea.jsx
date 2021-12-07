@@ -4,14 +4,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons'; 
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
 
-function Tarea(props) {
-  return (
+function Tarea({ id, text, hecha, completar, borrar}) { 
+  return ( 
     <li className="tarea">
-      <span>
+      <span 
+        className={`tick ${hecha && 'tick--hecho'}`} 
+        onClick={ completar } 
+      >
         <FontAwesomeIcon icon={faCheckCircle} />
       </span>
-      <p>{props.text}</p>
-      <span>
+      <p className={`texto ${hecha && 'texto--hecho'}`}>{text}</p>
+      <span 
+        className="basura" 
+        onClick={borrar}
+      >
         <FontAwesomeIcon icon={faTrash} />
       </span>
     </li>

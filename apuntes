@@ -77,3 +77,14 @@ Hay una propiedad especial, { props.children }, que pasa todo lo que haya entre 
 
 State is similar to props, but it is private and fully controlled by the component.
 
+### 
+
+Eventos: se tienen que envolver en funciones (por ejemplo, arrow functions), para que no se ejecuten automáticamente. También se pueden declarar como variables y llamarla, pero no con los paréntesis. Si tienen paréntesis (por ejemplo si necesitamos pasarle un parámetro), tienen que ir envueltos en una función. 
+
+Los eventos siempre empiezan con on (onClick, onChange, etc). 
+
+La aplicación escucha los eventos y reacciona cuando el usuario los hace. 
+
+### 
+
+Estado: puede cambiar la información de los componentes. El estado va de ancestros a descendientes. 
