@@ -5,7 +5,9 @@ import { ContadorDeTareas } from "../ContadorDeTareas";
 import { ListaDeTareas } from "../ListaDeTareas"; 
 import { Tarea } from "../Tarea"; 
 
-function UI({
+function UI({ 
+  error, 
+  loading, 
   totalDeTareas,
   tareasCompletadas,
   busqueda,
@@ -25,6 +27,9 @@ function UI({
         setBusqueda={setBusqueda}
       />
       <ListaDeTareas>
+        {error && <p>Error. Volvé a cargar la página. </p>}
+        {loading && <p>Cargando... </p>} 
+        {(!loading && (totalDeTareas === 0)) && <p>Agregá una tarea. </p>}
         {busquedaDeTareas.map(tarea => (
         <Tarea 
           key={tarea.id} 

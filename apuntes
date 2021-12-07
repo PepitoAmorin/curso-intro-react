@@ -88,3 +88,15 @@ La aplicación escucha los eventos y reacciona cuando el usuario los hace.
 ### 
 
 Estado: puede cambiar la información de los componentes. El estado va de ancestros a descendientes. 
+
+### 
+
+Hooks 
+
+Hooks are functions that let you “hook into” React state and lifecycle features from function components. 
+
+useState returns a pair: the current state value and a function that lets you update it. The only argument to useState is the initial state. 
+
+useEffect se ejecuta justo antes del render. enviándole un array vacío, se ejecuta sólo una vez (la primera vez que renderiza el contenido), y no vuelve a ejecutarse en los nuevos renders. 
+
+En el array podemos poner que queremos escuchar que cambie para ejecutar el useEffect. 

@@ -2,19 +2,64 @@ import React from 'react'
 import './App.css'; 
 import { UI } from "./UI"; 
 
-function App(props) { 
-  // localStorage 
-  const tareasEnLS = localStorage.getItem('TareasV1'); 
-  let tareasDeLSParseadas; 
-  if (!tareasEnLS) { 
-    localStorage.setItem('TareasV1', '[]'); 
-    tareasDeLSParseadas = []; 
-  } else {
-    tareasDeLSParseadas = JSON.parse(tareasEnLS);
-  }
+function useLocalStorage(listaDeTareas, valorInit) { 
+  const [loading, setLoading] = React.useState(true); 
+  const [error, setError] = React.useState(false); 
 
   // llamamos al estado de la lista de tareas
-  const [tareas, setTareas] = React.useState(tareasDeLSParseadas);
+  const [tareas, setTareas] = React.useState(valorInit);
+
+  React.useEffect(() => {
+    setTimeout(() => {
+      try {
+        // localStorage 
+        const tareasEnLS = localStorage.getItem(listaDeTareas); 
+        let tareasDeLSParseadas; 
+        if (!tareasEnLS) { 
+          localStorage.setItem(listaDeTareas, JSON.stringify(valorInit)); 
+          tareasDeLSParseadas = valorInit; 
+        } else {
+          tareasDeLSParseadas = JSON.parse(tareasEnLS);
+        } 
+
+        setTareas(tareasDeLSParseadas); 
+        setLoading(false); 
+      } catch(error) {
+        setError(error); 
+      }
+      
+    }, 3000)
+  }); 
+
+  // función para guardar tareas en localStorage
+  const guardarTareas = (lista) => { 
+    try {
+      const listaEnString = JSON.stringify(lista); 
+      localStorage.setItem(listaDeTareas, listaEnString); 
+      // tenemos que actualizar el estado de los componentes en la aplicación también 
+      setTareas(lista); 
+    } catch(error) {
+      setError(error);
+    }
+    
+  } 
+
+  return { 
+    error, 
+    loading, 
+    tareas, 
+    guardarTareas
+  }
+}
+
+function App(props) { 
+  const {
+    error, 
+    loading, 
+    tareas, 
+    guardarTareas
+  } = useLocalStorage('TareasV1', []); 
+
   // llamamos al estado de la búsqueda
   const [busqueda, setBusqueda] = React.useState('');
   // tareas totales y completadas 
@@ -34,13 +79,7 @@ function App(props) {
     busquedaDeTareas = tareas; 
   } 
 
-  // función para guardar tareas 
-  const guardarTareas = (lista) => {
-    const listaEnString = JSON.stringify(lista); 
-    localStorage.setItem('TareasV1', listaEnString); 
-    // tenemos que actualizar el estado de los componentes en la aplicación también 
-    setTareas(lista); 
-  }
+  
 
   // función para marcar la tarea como hecha
   const completarTarea = id => {
@@ -65,8 +104,12 @@ function App(props) {
     guardarTareas(nuevasTareas);
   }; 
 
+  
+
   return (
     <UI 
+    error={error}
+    loading={loading}
     totalDeTareas={totalDeTareas} 
     tareasCompletadas={tareasCompletadas} 
     busqueda={busqueda}
