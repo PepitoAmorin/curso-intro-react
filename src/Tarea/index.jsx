@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons'; 
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
 
-function Tarea({ id, text, hecha, completar, borrar}) { 
+function Tarea({ text, hecha, completar, borrar}) { 
   return ( 
     <li className="tarea">
       <span 

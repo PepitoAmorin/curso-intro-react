@@ -100,3 +100,7 @@ useState returns a pair: the current state value and a function that lets you up
 useEffect se ejecuta justo antes del render. enviándole un array vacío, se ejecuta sólo una vez (la primera vez que renderiza el contenido), y no vuelve a ejecutarse en los nuevos renders. 
 
 En el array podemos poner que queremos escuchar que cambie para ejecutar el useEffect. 
+
+### 
+
+React Context nos permite crear Providers y Consumers para que los componentes puedan conumirlos sin tener que pasar de padres a hijos, de hijos a sus hijos y así sucesivamente. Puede ser demasiado complicado si hay muchos niveles de Componentes. 
