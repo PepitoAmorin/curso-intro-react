@@ -18,7 +18,6 @@ function BuscadorDeTareas() {
         value={busqueda}
         onChange={buscar}
       ></input>
-      <p>{busqueda}</p>
     </>
   )
 }
