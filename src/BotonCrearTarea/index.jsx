@@ -5,7 +5,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 function BotonCrearTarea(props) { 
 
-  const crearTarea = () => alert(`Crear tarea (modal)`)
+  const crearTarea = () => props.setOpenModal(prevState => !prevState); 
 
   return (
       <button 

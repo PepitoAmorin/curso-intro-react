@@ -4,7 +4,8 @@
   position: relative; 
   background-color: #fff;
   border: none;
-  border-radius: 50%;
+  border-radius: 50%; 
+  z-index: 1;
 } 
 
 .crear-tarea .icono {

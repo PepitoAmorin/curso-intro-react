@@ -1,7 +1,11 @@
 import React from 'react'; 
-import './ContadorDeTareas.css'
+import { tareasContext } from '../TareasContext';
+import './ContadorDeTareas.css'; 
 
-function ContadorDeTareas({ totalDeTareas, tareasCompletadas}) { 
+
+function ContadorDeTareas() { 
+  const { totalDeTareas, tareasCompletadas} = React.useContext(tareasContext); 
+
   const textoContador = function(totalDeTareas, tareasCompletadas) {
     if (totalDeTareas === 0) {
       return `Todavía no tenés tareas.`

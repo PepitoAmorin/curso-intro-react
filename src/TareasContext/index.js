@@ -1,5 +1,5 @@
 import React from 'react'; 
-import { useLocalStorage } from './useLocalStorage';
+import { useLocalStorage } from './useLocalStorage'; 
 
 const tareasContext = React.createContext(); 
 
@@ -18,6 +18,8 @@ function TareasProvider(props) {
   const totalDeTareas = tareas.length; 
   const tareasCompletadas = tareas.filter(tarea => tarea.hecha === true).length; 
 
+  const [openModal, setOpenModal] = React.useState(false); 
+
   let busquedaDeTareas = []; 
   if (busqueda.length >= 1) {
     busquedaDeTareas = tareas.filter(tarea => {
@@ -34,8 +36,8 @@ function TareasProvider(props) {
   
 
   // función para marcar la tarea como hecha
-  const completarTarea = id => {
-    const indiceTarea = tareas.findIndex(tarea => tarea.id === id); 
+  const completarTarea = texto => {
+    const indiceTarea = tareas.findIndex(tarea => tarea.texto === texto); 
     // hay que mandar nueva lista de tareas con los cambios
     // primero la hacemos
     const nuevasTareas = [...tareas] 
@@ -49,10 +51,19 @@ function TareasProvider(props) {
     guardarTareas(nuevasTareas); 
   };  
 
-  const borrarTarea = id => {
-    const indiceTarea = tareas.findIndex(tarea => tarea.id === id); 
+  const borrarTarea = texto => {
+    const indiceTarea = tareas.findIndex(tarea => tarea.texto === texto); 
     const nuevasTareas = [...tareas]; 
     nuevasTareas.splice(indiceTarea, 1); 
+    guardarTareas(nuevasTareas);
+  }; 
+
+  const agregarTarea = texto => { 
+    const nuevasTareas = [...tareas]; 
+    nuevasTareas.push({ 
+      texto,
+      hecha: false
+    }); 
     guardarTareas(nuevasTareas);
   }; 
 
@@ -66,7 +77,11 @@ function TareasProvider(props) {
       setBusqueda,
       busquedaDeTareas,
       completarTarea,
-      borrarTarea
+      borrarTarea, 
+      openModal, 
+      setOpenModal, 
+      guardarTareas, 
+      agregarTarea
     }}>
       {props.children}
     </tareasContext.Provider>

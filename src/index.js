@@ -4,6 +4,6 @@ import ReactDOM from 'react-dom';
 import App from './App/index.js';
 
 ReactDOM.render( // manda a renderizar el componente App. 
-    <App />,
+  <App />,
   document.getElementById('root')
 ); 
